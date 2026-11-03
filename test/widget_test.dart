@@ -1,17 +1,21 @@
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:provider/provider.dart';
+
 import 'package:studylog_flutter/main.dart';
+import 'package:studylog_flutter/providers/catatan_store.dart';
 
 void main() {
-  testWidgets('StudyLog menampilkan form catatan', (
-      WidgetTester tester,
-      ) async {
-    await tester.pumpWidget(const StudyLogApp());
+  testWidgets('StudyLog menampilkan halaman beranda',
+          (WidgetTester tester) async {
+        await tester.pumpWidget(
+          ChangeNotifierProvider(
+            create: (_) => CatatanStore(),
+            child: const StudyLogApp(),
+          ),
+        );
 
-    expect(find.text('StudyLog - Form Catatan'), findsOneWidget);
-    expect(find.text('Mata kuliah'), findsOneWidget);
-    expect(find.text('Judul catatan'), findsOneWidget);
-    expect(find.text('Isi catatan'), findsOneWidget);
-    expect(find.text('Tampilkan Catatan'), findsOneWidget);
-  });
+        expect(find.text('Selamat Datang di StudyLog!'), findsOneWidget);
+        expect(find.text('Lihat Daftar Catatan'), findsOneWidget);
+      });
 }
